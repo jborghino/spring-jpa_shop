@@ -1,5 +1,7 @@
 package fr.treeptik.shop.service;
 
+import java.util.List;
+
 import fr.treeptik.shop.exception.ServiceException;
 import fr.treeptik.shop.model.Client;
 
@@ -13,6 +15,6 @@ public interface ClientService {
 
 	Client findById(Integer id) throws ServiceException;
 
-	Client findAll() throws ServiceException;
+	List<Client> findAll() throws ServiceException;
 	
 }

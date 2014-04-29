@@ -1,5 +1,7 @@
 package fr.treeptik.shop.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,9 +66,9 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	@Override
-	public Client findAll() throws ServiceException{
+	public List<Client> findAll() throws ServiceException{
 		try {
-			return (Client) clientDAO.findAll();
+			return (List<Client>) clientDAO.findAll();
 		} catch (DAOException e) {
 			throw new ServiceException("Erreur findAll client", e);
 		}
