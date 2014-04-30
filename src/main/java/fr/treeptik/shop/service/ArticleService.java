@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.treeptik.shop.exception.ServiceException;
 import fr.treeptik.shop.model.Article;
+import fr.treeptik.shop.model.CD;
 
 public interface ArticleService {
 
@@ -16,5 +17,9 @@ public interface ArticleService {
 	Article findById(Integer id) throws ServiceException;
 
 	List<Article> findAll() throws ServiceException;
+	
+	public List<Article> recherche(String pattern) throws ServiceException;
+
+	public List<Article> rechercheTrie(String pattern) throws ServiceException;
 	
 }

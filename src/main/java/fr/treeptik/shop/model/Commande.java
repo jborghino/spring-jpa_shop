@@ -22,7 +22,7 @@ public class Commande implements Serializable {
 	
 	private Date dateLivraison;
 	private String adresse;
-	private Integer total;
+	private Double total;
 	
 	@ManyToMany
 	private List<Article> articles;
@@ -62,7 +62,7 @@ public class Commande implements Serializable {
 	@Override
 	public String toString() {
 		return "Commande [id=" + id + ", dateLivraison=" + dateLivraison
-				+ ", adresse=" + adresse + "]";
+				+ ", adresse=" + adresse + ", total=" + total +"]";
 	}
 
 	public List<Article> getArticles() {
@@ -73,11 +73,11 @@ public class Commande implements Serializable {
 		this.articles = articles;
 	}
 
-	public Integer getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal(Integer total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}
 	

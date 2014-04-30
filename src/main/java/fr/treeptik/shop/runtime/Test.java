@@ -1,32 +1,38 @@
 package fr.treeptik.shop.runtime;
 
+import java.util.List;
 import java.util.Scanner;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import fr.treeptik.shop.exception.ServiceException;
+import fr.treeptik.shop.model.CD;
+import fr.treeptik.shop.service.CDService;
 
 public class Test {
 
 	public static void main(String[] args) {
 
-		String choix = "";
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+				"applicationContext.xml");
+		
+		CDService cdService = context.getBean(CDService.class);
+		
+		System.out.println("pattern : ");
+		String choix="";
 		Scanner scanner = new Scanner(System.in);
-		while (!choix.equalsIgnoreCase("q")) {
-
-			choix = scanner.nextLine();
-
-			switch (choix) {
-			case "1":
-				System.out.println("Traitement case 1");
-				continue;
-				
-
-			case "2":
-				System.out.println("Traitement case 2");
-				continue;
-				
-			default:
-				System.out.println("default");
-				break;
+		choix = scanner.nextLine();
+		
+		try {
+			List<CD> recherche = cdService.recherche(choix);
+			for (CD cd : recherche) {
+				System.out.println(cd);
 			}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 
 }

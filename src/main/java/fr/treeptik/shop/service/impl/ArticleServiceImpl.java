@@ -73,6 +73,24 @@ public class ArticleServiceImpl implements ArticleService{
 			throw new ServiceException("Erreur findAll article", e);
 		}
 	}
+
+	@Override
+	public List<Article> recherche(String pattern) throws ServiceException {
+		try {
+			return articleDAO.recherche(pattern);
+		} catch (DAOException e) {
+			throw new ServiceException("Erreur recherche article", e);
+		}
+	}
+
+	@Override
+	public List<Article> rechercheTrie(String pattern) throws ServiceException {
+		try {
+			return articleDAO.rechercheTrie(pattern);
+		} catch (DAOException e) {
+			throw new ServiceException("Erreur recherche triée article", e);
+		}
+	}
 	
 	
 	

@@ -10,7 +10,7 @@ public class CD extends Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String auteur;
-	
+
 	public CD() {
 
 	}
@@ -30,9 +30,8 @@ public class CD extends Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CD [id=" + super.getId() + ", prix=" + super.getPrix() + ", titre=" + super.getTitre() + ", auteur=" + auteur + "]";
+		return "CD [id=" + super.getId() + ", prix=" + super.getPrix()
+				+ ", titre=" + super.getTitre() + ", auteur=" + auteur + "]";
 	}
-	
-	
-	
+
 }

@@ -20,8 +20,11 @@ import fr.treeptik.shop.model.Commande;
 import fr.treeptik.shop.model.DVD;
 import fr.treeptik.shop.model.Livre;
 import fr.treeptik.shop.service.ArticleService;
+import fr.treeptik.shop.service.CDService;
 import fr.treeptik.shop.service.ClientService;
 import fr.treeptik.shop.service.CommandeService;
+import fr.treeptik.shop.service.DVDService;
+import fr.treeptik.shop.service.LivreService;
 
 public class Runtime {
 
@@ -76,6 +79,9 @@ public class Runtime {
 	public static void chooseAction(ApplicationContext context, String entity) {
 		ClientService clientService = context.getBean(ClientService.class);
 		ArticleService articleService = context.getBean(ArticleService.class);
+		CDService cdService = context.getBean(CDService.class);
+		DVDService dvdService = context.getBean(DVDService.class);
+		LivreService livreService = context.getBean(LivreService.class);
 
 		String choix = "";
 
@@ -87,6 +93,7 @@ public class Runtime {
 			System.out.println("3 - Modifier");
 			System.out.println("4 - Lister");
 			System.out.println("5 - Sélectionner");
+			System.out.println("6 - Chercher");
 			System.out.println("q - Quitter");
 
 			Scanner scanner = new Scanner(System.in);
@@ -139,7 +146,8 @@ public class Runtime {
 						for (Client client : findAll) {
 							System.out.println(client);
 						}
-						System.out.println("Sélectionner le client à supprimer");
+						System.out
+								.println("Sélectionner le client à supprimer");
 						String idString = scanner.nextLine();
 						Integer id = Integer.parseInt(idString);
 						Client client = clientService.findById(id);
@@ -194,11 +202,142 @@ public class Runtime {
 						e.printStackTrace();
 					}
 				}
+			} else if ("6".equals(choix)) {
+				switch (entity) {
+				case "client":
+					break;
+
+				case "article":
+					System.out.println("Choisir le type d'article : (CD/DVD/Livre/All)");
+					String typeArticle = scanner.nextLine();
+
+					System.out.println("Organiser la recherche par ordre alphabetique ? (y/n)");
+					String ordreAlphabetique = scanner.nextLine();
+
+					switch (typeArticle) {
+					case "CD":
+						System.out.println("Recherche par nom : ");
+						String searchCD = scanner.nextLine();
+						if ("n".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<CD> recherche = cdService.recherche(searchCD);
+								for (CD cd : recherche) {
+									System.out.println(cd);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else if ("y".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<CD> rechercheTrie = cdService.rechercheTrie(searchCD);
+								for (CD cd : rechercheTrie) {
+									System.out.println(cd);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							continue;
+						}
+						break;
+
+					case "DVD":
+						System.out.println("Recherche par nom : ");
+						String searchDVD = scanner.nextLine();
+						if ("n".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<DVD> recherche = dvdService.recherche(searchDVD);
+								for (DVD dvd : recherche) {
+									System.out.println(dvd);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else if ("y".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<DVD> rechercheTrie = dvdService.rechercheTrie(searchDVD);
+								for (DVD dvd : rechercheTrie) {
+									System.out.println(dvd);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							continue;
+						}
+						break;
+
+					case "Livre":
+						System.out.println("Recherche par nom : ");
+						String searchLivre = scanner.nextLine();
+						if ("n".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<Livre> recherche = livreService.recherche(searchLivre);
+								for (Livre livre : recherche) {
+									System.out.println(livre);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else if ("y".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<Livre> rechercheTrie = livreService.rechercheTrie(searchLivre);
+								for (Livre livre : rechercheTrie) {
+									System.out.println(livre);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							continue;
+						}
+						break;
+
+					case "All":
+						System.out.println("Recherche par nom : ");
+						String searchArticle = scanner.nextLine();
+						if ("n".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<Article> recherche = articleService.recherche(searchArticle);
+								for (Article article : recherche) {
+									System.out.println(article);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else if ("y".equalsIgnoreCase(ordreAlphabetique)) {
+							try {
+								List<Article> rechercheTrie = articleService.rechercheTrie(searchArticle);
+								for (Article article : rechercheTrie) {
+									System.out.println(article);
+								}
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							continue;
+						}
+						break;
+					default:
+						break;
+					}
+					break;
+				}
+
 			}
 		}
 	}
 
-	public static void clientChoice(Client client, Scanner scanner, ApplicationContext context, String entity) {
+	public static void clientChoice(Client client, Scanner scanner,
+			ApplicationContext context, String entity) {
 		ArticleService articleService = context.getBean(ArticleService.class);
 		Commande commande = new Commande();
 		List<Article> listArticle = new ArrayList<>();
@@ -206,7 +345,7 @@ public class Runtime {
 		String choix = "";
 		System.out.println("#########");
 		System.out.println("Client sélectionner : " + client);
-		
+
 		while (!choix.equalsIgnoreCase("q")) {
 			System.out.println("Choix :");
 			System.out.println("1 - Ajouter des articles");
@@ -216,7 +355,8 @@ public class Runtime {
 
 			switch (choix) {
 			case "1":
-				 commande = ajouterArticleCommande(scanner, context, articleService, listArticle, commande);
+				commande = ajouterArticleCommande(scanner, context,
+						articleService, listArticle, commande);
 				//
 				// System.out.println("Ajout d'articles");
 				// System.out.println("v - Valider la commande");
@@ -236,11 +376,10 @@ public class Runtime {
 				break;
 
 			case "2":
-				
-				
-				if(commande == null){
+
+				if (commande == null) {
 					System.out.println("Votre commande est vide");
-				} else{
+				} else {
 					System.out.println("validation de la commande");
 					List<Article> articles = commande.getArticles();
 					for (Article article : articles) {
@@ -249,7 +388,7 @@ public class Runtime {
 					validerCommande(scanner, context, commande, client);
 					commande = null;
 				}
-				
+
 				break;
 			default:
 				break;
@@ -258,7 +397,9 @@ public class Runtime {
 		}
 	}
 
-	public static Commande ajouterArticleCommande(Scanner scanner, ApplicationContext context, ArticleService articleService, List<Article> listArticle, Commande commande) {
+	public static Commande ajouterArticleCommande(Scanner scanner,
+			ApplicationContext context, ArticleService articleService,
+			List<Article> listArticle, Commande commande) {
 		System.out.println("Press q pour sortir de la sélection des articles");
 		String choix = "";
 
@@ -267,7 +408,7 @@ public class Runtime {
 			for (Article article : articles) {
 				System.out.println(article);
 			}
-			
+
 			while (!choix.equalsIgnoreCase("q")) {
 				System.out.println("Sélectionner l'id de l'article à ajouter");
 				choix = scanner.nextLine();
@@ -278,25 +419,34 @@ public class Runtime {
 					// TODO: handle exception
 				}
 				Article article = articleService.findById(id);
-				if(article != null){
+				if (article != null) {
 					listArticle.add(article);
 				}
-				
+
 			}
-	
+			
+			Double prix = 0.0;
+			for (Article article : listArticle) {
+				prix += article.getPrix();
+			}
+			
+			commande.setTotal(prix);
+
 			commande.setArticles(listArticle);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return commande;
 	}
 
-	public static Commande validerCommande(Scanner scanner, ApplicationContext context, Commande commande, Client client) {
-		CommandeService commandeService = context.getBean(CommandeService.class);
+	public static Commande validerCommande(Scanner scanner,
+			ApplicationContext context, Commande commande, Client client) {
+		CommandeService commandeService = context
+				.getBean(CommandeService.class);
 		ClientService clientService = context.getBean(ClientService.class);
-		
+
 		System.out.println("Saisir l'adresse de livraison");
 		String adresse = scanner.nextLine();
 		commande.setAdresse(adresse);
