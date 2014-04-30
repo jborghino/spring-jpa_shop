@@ -30,7 +30,7 @@ public class CD extends Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CD [auteur=" + auteur + "]";
+		return "CD [id=" + super.getId() + ", prix=" + super.getPrix() + ", titre=" + super.getTitre() + ", auteur=" + auteur + "]";
 	}
 	
 	

@@ -2,11 +2,14 @@ package fr.treeptik.shop.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Commande implements Serializable {
@@ -19,6 +22,10 @@ public class Commande implements Serializable {
 	
 	private Date dateLivraison;
 	private String adresse;
+	private Integer total;
+	
+	@ManyToMany
+	private List<Article> articles;
 	
 	public Commande() {}
 
@@ -56,6 +63,22 @@ public class Commande implements Serializable {
 	public String toString() {
 		return "Commande [id=" + id + ", dateLivraison=" + dateLivraison
 				+ ", adresse=" + adresse + "]";
+	}
+
+	public List<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 	
 	

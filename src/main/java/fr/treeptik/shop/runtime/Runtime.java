@@ -1,5 +1,9 @@
 package fr.treeptik.shop.runtime;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -12,10 +16,12 @@ import fr.treeptik.shop.exception.ServiceException;
 import fr.treeptik.shop.model.Article;
 import fr.treeptik.shop.model.CD;
 import fr.treeptik.shop.model.Client;
+import fr.treeptik.shop.model.Commande;
 import fr.treeptik.shop.model.DVD;
 import fr.treeptik.shop.model.Livre;
 import fr.treeptik.shop.service.ArticleService;
 import fr.treeptik.shop.service.ClientService;
+import fr.treeptik.shop.service.CommandeService;
 
 public class Runtime {
 
@@ -48,13 +54,22 @@ public class Runtime {
 			Scanner scanner = new Scanner(System.in);
 			choix = scanner.nextLine();
 
-			if ("1".equals(choix)) {
+			switch (choix) {
+			case "1":
 				entity = "client";
 				chooseAction(context, entity);
-			} else if ("2".equals(choix)) {
+				break;
+
+			case "2":
 				entity = "article";
 				chooseAction(context, entity);
+				break;
+
+			default:
+				System.out.println("Choix inconnu");
+				;
 			}
+
 		}
 	}
 
@@ -74,7 +89,6 @@ public class Runtime {
 			System.out.println("5 - Sélectionner");
 			System.out.println("q - Quitter");
 
-			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(System.in);
 			choix = scanner.nextLine();
 
@@ -140,6 +154,10 @@ public class Runtime {
 					Integer id = Integer.parseInt(idString);
 					try {
 						Client client = clientService.findById(id);
+						if (!client.equals(null)) {
+							clientChoice(client, scanner, context, entity);
+						}
+
 					} catch (ServiceException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -147,6 +165,144 @@ public class Runtime {
 				}
 			}
 		}
+	}
+
+	public static void clientChoice(Client client, Scanner scanner,
+			ApplicationContext context, String entity) {
+		ArticleService articleService = context.getBean(ArticleService.class);
+		Commande commande = new Commande();
+		List<Article> listArticle = new ArrayList<>();
+
+		String choix = "";
+		System.out.println("#########");
+		System.out.println("Client sélectionner : " + client);
+		
+		while (!choix.equalsIgnoreCase("q")) {
+			System.out.println("Choix :");
+			System.out.println("1 - Ajouter des articles");
+			System.out.println("2 - Valider la commande");
+			System.out.println("q - Quitter");
+			choix = scanner.nextLine();
+
+			switch (choix) {
+			case "1":
+				 commande = ajouterArticleCommande(scanner, context, articleService, listArticle, commande);
+				//
+				// System.out.println("Ajout d'articles");
+				// System.out.println("v - Valider la commande");
+				// System.out.println("a - Annuler la commande");
+				// System.out.println("N'importe quelle touche pour ajouter d'autre article");
+				// String decision;
+				// decision = scanner.nextLine();
+				//
+				// if("v".equalsIgnoreCase(decision)){
+				//
+				// } else if("a".equalsIgnoreCase(decision)){
+				//
+				// } else {
+				// ajouterArticleCommande(scanner, context, articleService,
+				// listArticle, commande);
+				// }
+				break;
+
+			case "2":
+				
+				
+				if(commande == null){
+					System.out.println("Votre commande est vide");
+				} else{
+					System.out.println("validation de la commande");
+					List<Article> articles = commande.getArticles();
+					for (Article article : articles) {
+						System.out.println(article);
+					}
+					validerCommande(scanner, context, commande);
+					commande = null;
+				}
+				
+				break;
+			default:
+				break;
+			}
+
+		}
+	}
+
+	public static Commande ajouterArticleCommande(Scanner scanner,
+			ApplicationContext context, ArticleService articleService,
+			List<Article> listArticle, Commande commande) {
+		System.out.println("Press q pour sortir de la sélection des articles");
+		String choix = "";
+
+		try {
+			List<Article> articles = articleService.findAll();
+			for (Article article : articles) {
+				System.out.println(article);
+			}
+			
+			while (!choix.equalsIgnoreCase("q")) {
+				System.out.println("Sélectionner l'id de l'article à ajouter");
+				choix = scanner.nextLine();
+				Integer id = 0;
+				try {
+					id = Integer.parseInt(choix);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				Article article = articleService.findById(id);
+				if(article != null){
+					listArticle.add(article);
+				}
+				
+			}
+	
+			commande.setArticles(listArticle);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return commande;
+	}
+
+	public static Commande validerCommande(Scanner scanner, ApplicationContext context, Commande commande) {
+		CommandeService commandeService = context.getBean(CommandeService.class);
+		ClientService clientService = context.getBean(ClientService.class);
+		
+		System.out.println("Saisir l'adresse de livraison");
+		String adresse = scanner.nextLine();
+		commande.setAdresse(adresse);
+
+		System.out.println("Saisir la date de livraison (format : JJ/MM/AAAA)");
+		System.out.println("Exemple : 01/01/2000");
+		String dateLivraisonString = scanner.nextLine();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date;
+		try {
+			date = dateFormat.parse(dateLivraisonString);
+			commande.setDateLivraison(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			try {
+				throw new Exception("Erreur saisie");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+		try {
+			Client client = new Client();
+			List<Commande> commandes = new ArrayList<>();
+			commandes.add(commande);
+			client.setCommandes(commandes);
+			commandeService.save(commande);
+			clientService.update(client);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return commande;
 	}
 
 	private static Article choixArticle(Scanner scanner,

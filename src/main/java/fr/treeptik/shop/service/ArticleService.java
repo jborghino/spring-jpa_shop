@@ -1,5 +1,7 @@
 package fr.treeptik.shop.service;
 
+import java.util.List;
+
 import fr.treeptik.shop.exception.ServiceException;
 import fr.treeptik.shop.model.Article;
 
@@ -13,6 +15,6 @@ public interface ArticleService {
 
 	Article findById(Integer id) throws ServiceException;
 
-	Article findAll() throws ServiceException;
+	List<Article> findAll() throws ServiceException;
 	
 }

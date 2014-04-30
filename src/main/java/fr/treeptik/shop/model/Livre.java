@@ -40,7 +40,8 @@ public class Livre extends Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Livre [auteur=" + auteur + ", nbPages=" + nbPages + "]";
+		return "Livre [id=" + super.getId() + ", prix=" + super.getPrix() + ", titre=" + super.getTitre() + ", auteur=" + auteur + ", nbPages=" + nbPages + "]";
+		
 	}
 	
 	
