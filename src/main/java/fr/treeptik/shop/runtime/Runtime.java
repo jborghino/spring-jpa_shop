@@ -132,10 +132,41 @@ public class Runtime {
 
 				}
 			} else if ("2".equals(choix)) {
+				switch (entity) {
+				case "client":
+					try {
+						List<Client> findAll = clientService.findAll();
+						for (Client client : findAll) {
+							System.out.println(client);
+						}
+						System.out.println("Sélectionner le client à supprimer");
+						String idString = scanner.nextLine();
+						Integer id = Integer.parseInt(idString);
+						Client client = clientService.findById(id);
+						clientService.remove(client);
+					} catch (ServiceException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				case "article":
+					break;
+				}
 
 			} else if ("3".equals(choix)) {
 
 			} else if ("4".equals(choix)) {
+				switch (entity) {
+				case "client":
+					try {
+						List<Client> findAll = clientService.findAll();
+						for (Client client : findAll) {
+							System.out.println(client);
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
 
 			} else if ("5".equals(choix)) {
 				switch (entity) {
@@ -167,8 +198,7 @@ public class Runtime {
 		}
 	}
 
-	public static void clientChoice(Client client, Scanner scanner,
-			ApplicationContext context, String entity) {
+	public static void clientChoice(Client client, Scanner scanner, ApplicationContext context, String entity) {
 		ArticleService articleService = context.getBean(ArticleService.class);
 		Commande commande = new Commande();
 		List<Article> listArticle = new ArrayList<>();
@@ -216,7 +246,7 @@ public class Runtime {
 					for (Article article : articles) {
 						System.out.println(article);
 					}
-					validerCommande(scanner, context, commande);
+					validerCommande(scanner, context, commande, client);
 					commande = null;
 				}
 				
@@ -228,9 +258,7 @@ public class Runtime {
 		}
 	}
 
-	public static Commande ajouterArticleCommande(Scanner scanner,
-			ApplicationContext context, ArticleService articleService,
-			List<Article> listArticle, Commande commande) {
+	public static Commande ajouterArticleCommande(Scanner scanner, ApplicationContext context, ArticleService articleService, List<Article> listArticle, Commande commande) {
 		System.out.println("Press q pour sortir de la sélection des articles");
 		String choix = "";
 
@@ -265,7 +293,7 @@ public class Runtime {
 		return commande;
 	}
 
-	public static Commande validerCommande(Scanner scanner, ApplicationContext context, Commande commande) {
+	public static Commande validerCommande(Scanner scanner, ApplicationContext context, Commande commande, Client client) {
 		CommandeService commandeService = context.getBean(CommandeService.class);
 		ClientService clientService = context.getBean(ClientService.class);
 		
@@ -291,7 +319,6 @@ public class Runtime {
 		}
 
 		try {
-			Client client = new Client();
 			List<Commande> commandes = new ArrayList<>();
 			commandes.add(commande);
 			client.setCommandes(commandes);
