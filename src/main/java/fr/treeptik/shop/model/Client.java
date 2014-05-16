@@ -1,13 +1,19 @@
 package fr.treeptik.shop.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Client implements Serializable {
@@ -15,24 +21,27 @@ public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	private String nom;
-	private String prenom;
-	private String adresse;
-	@OneToMany
-	private List<Commande> commandes;
-	
-	public Client() {}
 
-	public Client(String nom, String prenom, String adresse, List<Commande> commandes) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.adresse = adresse;
-		this.commandes = commandes;
-	}
+	@Size(min = 2, max = 10, message = "Le champ nom doit avoir entre 2 et 10 caractères")
+	@NotNull(message = "Le champ nom ne doit pas être nul")
+	private String nom;
+
+	@Email(message = "Adresse mail non valide")
+	private String email;
+
+	@DateTimeFormat(pattern = "dd/MM/yyy", style = "format incorrect")
+	@Future(message = "La date est incorrecte")
+	private Date dateInscription;
+
+	// @Range(message="Le champ age ne doit pas être vide")
+	private Integer age;
+
+	private String password;
+
+	@ManyToOne
+	private Role role;
 
 	public Integer getId() {
 		return id;
@@ -50,35 +59,51 @@ public class Client implements Serializable {
 		this.nom = nom;
 	}
 
-	public String getPrenom() {
-		return prenom;
+	public Date getDateInscription() {
+		return dateInscription;
 	}
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setDateInscription(Date dateInscription) {
+		this.dateInscription = dateInscription;
 	}
 
-	public String getAdresse() {
-		return adresse;
+	public Integer getAge() {
+		return age;
 	}
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom
-				+ ", adresse=" + adresse + "]";
+		return "Client [id=" + id + ", nom=" + nom + ", email=" + email
+				+ ", dateInscription=" + dateInscription + ", age=" + age
+				+ ", password=" + password + "]";
 	}
 
-	public List<Commande> getCommandes() {
-		return commandes;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setCommandes(List<Commande> commandes) {
-		this.commandes = commandes;
+	public void setRole(Role role) {
+		this.role = role;
 	}
-	
-	
+
 }

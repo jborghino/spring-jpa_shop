@@ -4,7 +4,6 @@ import java.util.List;
 
 import fr.treeptik.shop.exception.DAOException;
 import fr.treeptik.shop.model.Article;
-import fr.treeptik.shop.model.CD;
 
 public interface ArticleDAO extends GenericDAO<Article, Integer> {
 

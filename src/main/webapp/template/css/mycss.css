@@ -1,0 +1,26 @@
+i {
+	color: #C2C2AA;
+	margin-right:5px;
+}
+
+.jumbotron{
+	background-color: #C2C2AA;
+	color: #FFF;
+}
+
+.modal-backdrop{
+	background-color: #A97AAE;
+}
+
+.element{
+	background: #C2C2AA;
+	border: 1px solid #000;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	width: 175px;
+	height: 175x;
+}
+
+#logout{
+	text-align:right;
+}

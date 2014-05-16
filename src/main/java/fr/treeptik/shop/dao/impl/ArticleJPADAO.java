@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import fr.treeptik.shop.dao.ArticleDAO;
 import fr.treeptik.shop.exception.DAOException;
 import fr.treeptik.shop.model.Article;
-import fr.treeptik.shop.model.CD;
 
 @Repository
 public class ArticleJPADAO extends GenericJPADAO<Article, Integer> implements
