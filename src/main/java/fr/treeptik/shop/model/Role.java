@@ -8,15 +8,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Role implements Serializable{
+public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	private String role;
+
+	public Role() {
+		super();
+	}
+
+	public Role(String role) {
+		super();
+		this.role = role;
+	}
 
 	public Integer getId() {
 		return id;
@@ -38,7 +47,5 @@ public class Role implements Serializable{
 	public String toString() {
 		return "Role [id=" + id + ", role=" + role + "]";
 	}
-	
-	
-	
+
 }

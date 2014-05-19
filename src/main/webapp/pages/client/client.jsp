@@ -99,6 +99,15 @@
 					</div>
 
 					<br />
+					
+					<form:errors path="password" />
+
+					<div class="form-group">
+						<form:label path="password">Password</form:label>
+						<form:input type="password" name="password" path="password" cssClass="bg-focus form-control" />
+					</div>
+
+					<br />
 
 					<form:errors path="dateInscription" />
 					<div class="form-group">
@@ -139,15 +148,15 @@
 					</div>
 					<br />
 					
-					<form:errors path="role" />
-					<div class="form-group" id="paysformgroup">
-						<form:label path="role">Role</form:label>
-						<form:select name="role" id="role" path="role">
-							<option></option>
-							<option value=ADMIN">ADMIN</option>
-							<option value=USER">USER</option>
-						</form:select>
-					</div>
+<%-- 					<form:errors path="role" /> --%>
+<!-- 					<div class="form-group" id="paysformgroup"> -->
+<%-- 						<form:label path="role">Role</form:label> --%>
+<%-- 						<form:select name="role" id="role" path="role"> --%>
+<!-- 							<option></option> -->
+<!-- 							<option value=ADMIN">ADMIN</option> -->
+<!-- 							<option value=USER">USER</option> -->
+<%-- 						</form:select> --%>
+<!-- 					</div> -->
 					
 					<br />
 					<input type="submit" value="Valider" class="btn btn-primary" />

@@ -14,9 +14,11 @@
 
 	Client id : ${client.id }
 	${client.nom }
+	${client.prenom }
 	<fmt:formatDate value="${client.dateInscription }" pattern="dd/MM/yyyy" />
 	${client.age }
 	${client.email }
+	${client.adresse }
 </body>
 
 </html>

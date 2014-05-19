@@ -54,11 +54,14 @@
 			<div class="row">
 				<div class="col-lg-4 col-lg-offset-4 m-t-large">
 					<section class="panel">
-						<header class="panel-heading text-center"> Connectez-vous à votre compte Shop </header>
-						<form action="../j_spring_security_check" method="POST" class="panel-body">
+						<header class="panel-heading text-center"> Connectez-vous
+							à votre compte Shop </header>
+						<form action="../j_spring_security_check" method="POST"
+							class="panel-body">
 							<div class="block">
-								<label class="control-label">Email</label> <input type="email" 
-								placeholder="test@example.com" class="form-control" name="j_username">
+								<label class="control-label">Email</label> <input type="email"
+									placeholder="test@example.com" class="form-control"
+									name="j_username">
 							</div>
 							<div class="block">
 								<label class="control-label">Mot de passe</label> <input
@@ -68,8 +71,13 @@
 
 							<button type="submit" class="btn btn-info">Connexion</button>
 
+								<a href="../client/init.do" class="col-lg-12 col-lg-offset-5">Créer un compte</a>
+
+
 						</form>
 					</section>
+
+
 				</div>
 			</div>
 		</div>

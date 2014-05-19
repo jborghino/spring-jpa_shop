@@ -83,41 +83,44 @@
 
 	<!-- Security -->
 
-	<security:global-method-security
-		jsr250-annotations="enabled" secured-annotations="enabled" />
+<!-- 	<security:global-method-security -->
+<!-- 		jsr250-annotations="enabled" secured-annotations="enabled" /> -->
 
 
-	<security:http pattern="/login/init.do" security="none" />
-	<security:http pattern="/template/images/**" security="none" />
-	<security:http pattern="/template/css/**" security="none" />
-	<security:http pattern="/template/js/**" security="none" />
-	<security:http pattern="/template/font/**" security="none" />
+<!-- 	<security:http pattern="/login/init.do" security="none" /> -->
+<!-- 	<security:http pattern="/client/init.do" security="none" /> -->
+<!-- 	<security:http pattern="/template/images/**" security="none" /> -->
+<!-- 	<security:http pattern="/template/css/**" security="none" /> -->
+<!-- 	<security:http pattern="/template/js/**" security="none" /> -->
+<!-- 	<security:http pattern="/template/font/**" security="none" /> -->
 
-	<security:http>
-		<security:form-login login-page="/login/init.do"
-			default-target-url="/client/list.do" authentication-failure-url="/login/init.do" />
-		<security:intercept-url pattern="/client/list.do" access="ROLE_USER, ROLE_ADMIN" />
-		<security:intercept-url pattern="/client/init.do" access="ROLE_ADMIN, ROLE_USER" />
+<!-- 	<security:http> -->
+<!-- 		<security:form-login login-page="/login/init.do" -->
+<!-- 			default-target-url="/client/list.do" authentication-failure-url="/login/init.do" /> -->
+<!-- 		<security:intercept-url pattern="/client/list.do" access="ROLE_ADMIN" /> -->
+<!-- 		<security:intercept-url pattern="/client/init.do" access="ROLE_ADMIN, ROLE_USER" /> -->
 
-		<security:logout logout-success-url="/login/init.do" />
-	</security:http>
+<!-- 		<security:logout logout-success-url="/login/init.do" /> -->
+<!-- 	</security:http> -->
 
 
-	<security:authentication-manager>
+<!-- 	<security:authentication-manager> -->
 
-		<security:authentication-provider>
+<!-- 		<security:authentication-provider> -->
+
+
 			<!-- <security:user-service> -->
 			<!-- <security:user name="paul" authorities="ROLE_USER" -->
 			<!-- disabled="false" password="123456" /> -->
 			<!-- </security:user-service> -->
 
-			<security:jdbc-user-service
-				data-source-ref="dataSource"
-				users-by-username-query="Select email, password, 'true' as enabled From Client where email=?"
-				authorities-by-username-query="Select c.email, r.role from Role r join Client c on c.role_id=r.id
-			where c.email=? " />
-		</security:authentication-provider>
-	</security:authentication-manager>
+<!-- 			<security:jdbc-user-service -->
+<!-- 				data-source-ref="dataSource" -->
+<!-- 				users-by-username-query="Select email, password, 'true' as enabled From Client where email=?" -->
+<!-- 				authorities-by-username-query="Select c.email, r.role from Role r join Client c on c.role_id=r.id -->
+<!-- 			where c.email=? " /> -->
+<!-- 		</security:authentication-provider> -->
+<!-- 	</security:authentication-manager> -->
 
 
 </beans>

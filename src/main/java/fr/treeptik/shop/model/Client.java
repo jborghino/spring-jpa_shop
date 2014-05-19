@@ -27,6 +27,8 @@ public class Client implements Serializable {
 	@Size(min = 2, max = 10, message = "Le champ nom doit avoir entre 2 et 10 caractères")
 	@NotNull(message = "Le champ nom ne doit pas être nul")
 	private String nom;
+	
+	private String prenom;
 
 	@Email(message = "Adresse mail non valide")
 	private String email;
@@ -39,6 +41,8 @@ public class Client implements Serializable {
 	private Integer age;
 
 	private String password;
+	
+	private String adresse;
 
 	@ManyToOne
 	private Role role;
@@ -104,6 +108,22 @@ public class Client implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 
 }
